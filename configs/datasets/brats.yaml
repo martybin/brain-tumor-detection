@@ -1,0 +1,50 @@
+name: BraTS
+root: datasets/raw/BraTS
+# Adult BraTS file names differ by year. Patterns are matched literally
+# against files that exist. inspect_dataset.py reports non-matches.
+# BraTS 2021: <id>_t1.nii.gz, _t1ce, _t2, _flair, _seg
+# BraTS 2023+: <id>-t1n.nii.gz, -t1c, -t2w, -t2f, -seg
+patient_id_from: parent_directory
+modalities:
+  t1:
+    required: true
+    patterns: ["*_t1.nii.gz", "*_t1.nii", "*-t1n.nii.gz", "*_t1n.nii.gz"]
+  t1ce:
+    required: true
+    patterns: ["*_t1ce.nii.gz", "*_t1ce.nii", "*-t1c.nii.gz", "*_t1c.nii.gz"]
+  t2:
+    required: true
+    patterns: ["*_t2.nii.gz", "*_t2.nii", "*-t2w.nii.gz", "*_t2w.nii.gz"]
+  flair:
+    required: true
+    patterns: ["*_flair.nii.gz", "*_flair.nii", "*-t2f.nii.gz", "*_t2f.nii.gz"]
+labels:
+  segmentation:
+    confirmed: true
+    convention: "Adult BraTS: 0 background, 1 NCR/NET, 2 edema, 4 enhancing. Label 3 is unused."
+    patterns: ["*_seg.nii.gz", "*_seg.nii", "*-seg.nii.gz"]
+    values:
+      0: background
+      1: ncr_net
+      2: edema
+      4: enhancing
+    regions:
+      WT: [1, 2, 4]
+      TC: [1, 4]
+      ET: [4]
+  classification:
+    confirmed: false
+    reason: "Adult BraTS segmentation releases do not provide a shared WHO-grade label."
+  molecular:
+    confirmed: false
+  survival:
+    confirmed: false
+tasks:
+  segmentation: true
+  classification: false
+  molecular: false
+  survival: false
+notes: >
+  Schema describes published BraTS naming conventions. It does not claim
+  that a local download exists. Discovery fails if the root is missing or
+  if required modalities are absent.

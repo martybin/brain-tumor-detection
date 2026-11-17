@@ -1,0 +1,45 @@
+seed: 42
+device: auto
+dataset: BraTS
+model_config: configs/models/hybrid.yaml
+data:
+  processed_root: datasets/processed
+  splits_root: datasets/splits
+  patch_size: [64, 64, 64]
+  samples_per_volume: 2
+  batch_size: 1
+  num_workers: 0
+  # Foreground sampling ratio. The rest of the patches are background.
+  pos_fraction: 0.7
+optim:
+  name: adamw
+  lr: 0.0001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  accum_steps: 4
+  amp: true
+scheduler:
+  name: cosine
+  warmup_epochs: 2
+epochs: 100
+early_stopping:
+  patience: 20
+  metric: dice
+  mode: max
+loss:
+  segmentation: dice_ce
+  dice_weight: 1.0
+  ce_weight: 1.0
+  include_background: false
+log:
+  backend: tensorboard
+  dir: runs
+checkpoint:
+  dir: checkpoints
+split:
+  train: 0.7
+  val: 0.15
+  test: 0.15
+notes: >
+  Research training only. Metrics written by the trainer are computed
+  from the loaded split. An empty split is an error, not a zero score.

@@ -1,0 +1,45 @@
+name: REMBRANDT
+root: datasets/raw/REMBRANDT
+format: dicom
+patient_id_from: parent_directory
+confirmed_layout: false
+# Series descriptions vary by site and scanner. The user must map the
+# descriptions that inspect_dataset.py prints. An empty map is not a guess.
+series_description_map: {}
+modalities:
+  t1:
+    required: false
+    patterns: []
+  t1ce:
+    required: false
+    patterns: []
+  t2:
+    required: false
+    patterns: []
+  flair:
+    required: false
+    patterns: []
+labels:
+  segmentation:
+    confirmed: false
+    patterns: []
+    values: {}
+    regions: {}
+    reason: "The TCIA REMBRANDT collection is DICOM imaging. It does not ship a BraTS-style segmentation for every case."
+  classification:
+    confirmed: false
+  molecular:
+    confirmed: false
+    table: null
+  survival:
+    confirmed: false
+    table: null
+tasks:
+  segmentation: false
+  classification: false
+  molecular: false
+  survival: false
+notes: >
+  prepare_dataset.py refuses to convert DICOM until series_description_map
+  assigns real local series descriptions to t1, t1ce, t2, or flair.
+  Raw DICOM is never modified.

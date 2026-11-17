@@ -1,0 +1,28 @@
+# Each entry overrides the hybrid model config. Running an ablation
+# requires a prepared dataset. This file does not contain results.
+dataset: BraTS
+base_model: configs/models/hybrid.yaml
+training: configs/training.yaml
+variants:
+  - name: cnn_only
+    overrides:
+      use_swin_bottleneck: false
+      fusion: weighted_sum
+  - name: cross_attention
+    overrides:
+      use_swin_bottleneck: true
+      fusion: cross_attention
+  - name: no_modality_dropout
+    overrides:
+      modality_dropout: 0.0
+  - name: modality_dropout_0.2
+    overrides:
+      modality_dropout: 0.2
+baselines:
+  - configs/models/unet3d.yaml
+  - configs/models/swin_unetr.yaml
+  - configs/models/nnunet.yaml
+comparison_rule: >
+  Do not rank models until every variant has been trained and evaluated
+  on the same patient-level split. External nnU-Net stays unranked until
+  its own training log is imported.

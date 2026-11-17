@@ -1,0 +1,49 @@
+name: UCSF-PDGM
+root: datasets/raw/UCSF-PDGM
+patient_id_from: parent_directory
+# TCIA UCSF-PDGM releases have changed filenames across versions.
+# These patterns are candidates. confirmed_layout stays false until
+# inspect_dataset.py shows that local files match.
+confirmed_layout: false
+modalities:
+  t1:
+    required: true
+    patterns: ["*_T1.nii.gz", "*_t1.nii.gz", "*T1w.nii.gz"]
+  t1ce:
+    required: true
+    patterns: ["*_T1c.nii.gz", "*_T1ce.nii.gz", "*_t1ce.nii.gz", "*T1c.nii.gz"]
+  t2:
+    required: true
+    patterns: ["*_T2.nii.gz", "*_t2.nii.gz", "*T2w.nii.gz"]
+  flair:
+    required: true
+    patterns: ["*_FLAIR.nii.gz", "*_flair.nii.gz", "*FLAIR.nii.gz"]
+labels:
+  segmentation:
+    confirmed: false
+    convention: "Do not assume BraTS label integers. Set values after inspecting a local mask."
+    patterns: ["*tumor_segmentation.nii.gz", "*_seg.nii.gz", "*segmentation.nii.gz"]
+    values: {}
+    regions: {}
+  classification:
+    confirmed: false
+    table: null
+    column: null
+  molecular:
+    confirmed: false
+    table: null
+    columns: []
+    reason: "IDH and 1p/19q exist in the clinical table for a subset. Point table and columns at the local CSV. Missing rows stay missing."
+  survival:
+    confirmed: false
+    table: null
+    time_column: null
+    event_column: null
+tasks:
+  segmentation: false
+  classification: false
+  molecular: false
+  survival: false
+notes: >
+  Extra sequences (DWI, ASL, spectroscopy) are ignored unless added here.
+  Do not merge this cohort with BraTS until label harmonization is confirmed.

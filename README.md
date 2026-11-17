@@ -21,7 +21,9 @@ The proposed framework will investigate three major medical imaging tasks:
 
 The project will also explore explainable artificial intelligence, uncertainty estimation, and domain generalization to improve model interpretability and robustness across different MRI datasets.
 
-**Important:** This is a research framework, not a clinically validated diagnostic system.
+**Important:** This is a research framework, not a clinically validated diagnostic system. It does not report accuracy, Dice, or any other result unless you train and evaluate it on data you have downloaded.
+
+The host used for development has an RTX 5070 Laptop GPU with 8 GB VRAM. Training defaults are 64³ patches, batch size 1, and gradient accumulation. `environment.yml` targets Python 3.11. Dataset schemas under `configs/datasets/` describe published file patterns and fail if the local files do not match. UCSF-PDGM, UPENN-GBM, REMBRANDT, and BraTS-PEDs keep segmentation and clinical tasks off until their label maps are confirmed in those files.
 
 ## 2. Research Objectives
 
@@ -105,7 +107,7 @@ The project will investigate the following datasets:
 
 Official sources:
 
-- [BraTS](https://www.med.upenn.edu/cbica/brats/)
+- [BraTS](https://msd-for-monai.s3-us-west-2.amazonaws.com/Task01_BrainTumour.tar)
 - [UCSF-PDGM](https://www.cancerimagingarchive.net/collection/ucsf-pdgm/)
 - [UPENN-GBM](https://www.cancerimagingarchive.net/collection/upenn-gbm/)
 - [REMBRANDT](https://www.cancerimagingarchive.net/collection/rembrandt/)
@@ -272,9 +274,11 @@ Raw medical images must remain unchanged.
 Example command:
 
 ```bash
-python scripts/train.py \
-    --config configs/training.yaml \
-    --dataset BraTS
+python scripts/inspect_dataset.py --dataset BraTS
+python scripts/prepare_dataset.py --dataset BraTS
+python scripts/train.py --config configs/training.yaml
+python scripts/evaluate.py --checkpoint checkpoints/BraTS/hybrid/best.pt
+python scripts/predict.py --input PATH --checkpoint checkpoints/BraTS/hybrid/best.pt
 ```
 
 Training configuration will define:
@@ -365,17 +369,13 @@ Dataset usage must comply with the licensing and access requirements of each sou
 
 Current development stages:
 
-- [ ] Dataset acquisition.
-- [ ] Dataset metadata analysis.
-- [ ] MRI preprocessing.
-- [ ] Baseline implementation.
-- [ ] Hybrid architecture development.
-- [ ] Multimodal fusion.
-- [ ] Multi-task learning.
-- [ ] Explainable AI.
-- [ ] Uncertainty estimation.
-- [ ] External validation.
-- [ ] Ablation studies.
+- [ ] Dataset acquisition. Nothing has been downloaded in this repository.
+- [x] Dataset inspection and schema checks (`scripts/inspect_dataset.py`).
+- [x] MRI preprocessing that reads raw data and writes only under `datasets/processed/`.
+- [x] Baseline adapters for MONAI 3D U-Net and Swin UNETR. nnU-Net is external.
+- [x] Hybrid CNN-Transformer, fusion, and multi-task heads.
+- [x] Training, evaluation, explainability, and uncertainty code.
+- [ ] Trained checkpoints, external-validation numbers, and ablation results.
 - [ ] Research publication.
 
 ## 15. Future Directions

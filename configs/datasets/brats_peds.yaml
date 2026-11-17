@@ -1,0 +1,38 @@
+name: BraTS-PEDs
+root: datasets/raw/BraTS-PEDs
+patient_id_from: parent_directory
+confirmed_layout: false
+modalities:
+  t1:
+    required: true
+    patterns: ["*-t1n.nii.gz", "*_t1.nii.gz", "*_t1n.nii.gz"]
+  t1ce:
+    required: true
+    patterns: ["*-t1c.nii.gz", "*_t1ce.nii.gz", "*_t1c.nii.gz"]
+  t2:
+    required: true
+    patterns: ["*-t2w.nii.gz", "*_t2.nii.gz", "*_t2w.nii.gz"]
+  flair:
+    required: true
+    patterns: ["*-t2f.nii.gz", "*_flair.nii.gz", "*_t2f.nii.gz"]
+labels:
+  segmentation:
+    confirmed: false
+    convention: "Pediatric BraTS label integers are not assumed to equal adult BraTS. Inspect unique values and set values/regions, then set confirmed true."
+    patterns: ["*-seg.nii.gz", "*_seg.nii.gz"]
+    values: {}
+    regions: {}
+  classification:
+    confirmed: false
+  molecular:
+    confirmed: false
+  survival:
+    confirmed: false
+tasks:
+  segmentation: false
+  classification: false
+  molecular: false
+  survival: false
+notes: >
+  Pediatric glioma is a different cohort from adult BraTS. Do not pool
+  the two without an explicit harmonization config.

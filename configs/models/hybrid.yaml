@@ -1,0 +1,26 @@
+name: hybrid
+implementation: local
+in_modalities: 4
+base_channels: 8
+encoder_channels: [8, 16, 32, 64]
+seg_channels: 3
+use_swin_bottleneck: true
+swin_heads: 4
+swin_window: 4
+fusion: cross_attention
+modality_dropout: 0.1
+feature_dropout: 0.1
+classification:
+  enabled: false
+  num_classes: null
+molecular:
+  enabled: false
+  num_classes: null
+survival:
+  enabled: false
+notes: >
+  Hybrid 3D CNN encoder with a windowed self-attention bottleneck,
+  per-scale cross-attention fusion, adaptive modality weights, and
+  modality dropout. Defaults are sized for about 8 GB VRAM at 64^3.
+  Classification, molecular, and survival heads stay off unless the
+  dataset schema confirms those labels.

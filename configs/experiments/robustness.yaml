@@ -1,0 +1,15 @@
+dataset: BraTS
+# Evaluation-time perturbations. They are applied to copies in memory.
+perturbations:
+  - name: identity
+  - name: gaussian_noise
+    std: 0.1
+  - name: modality_dropout
+    drop: [flair]
+  - name: modality_dropout
+    drop: [t1ce]
+  - name: intensity_scale
+    factor: 0.9
+notes: >
+  Robustness numbers are computed only when a checkpoint and a test split
+  are both present. Missing modalities in the perturbation list are reported.

@@ -1,0 +1,11 @@
+name: nnunet
+implementation: external
+package: nnunetv2
+plans: nnUNetPlans
+configuration: 3d_fullres
+fold: 0
+notes: >
+  nnU-Net is an external baseline. This repository does not reimplement it
+  and does not report nnU-Net metrics unless that package is run.
+  scripts/export_nnunet.py writes a dataset.json from a prepared manifest
+  when nnunetv2 is installed. No result is invented if it is not run.

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مرورگر MRI پژوهشی</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <div>
+        <p class="eyebrow">پژوهش تصویربرداری مغز</p>
+        <h1>مرور مطالعه MRI</h1>
+      </div>
+    </div>
+    <p id="model-state" class="pill">در حال بررسی مدل</p>
+  </header>
+  <p class="disclaimer" id="disclaimer">این صفحه تشخیص پزشکی نمی‌دهد.</p>
+
+  <main>
+    <section class="panel intake" aria-label="بارگذاری">
+      <header>
+        <h2>مطالعه</h2>
+        <p>چهار حجم NIfTI را بگذار. عکس تکی فقط نمایش داده می‌شود.</p>
+      </header>
+      <div id="drop" class="drop" tabindex="0">
+        <strong>فایل‌ها را اینجا رها کن</strong>
+        <span>T1، T1ce، T2، FLAIR یا یک PNG</span>
+        <input id="files" type="file" multiple accept=".nii,.nii.gz,.png,.jpg,.jpeg,.webp" hidden>
+      </div>
+      <ul class="slots" id="slots"></ul>
+      <div class="actions">
+        <button id="choose" type="button" class="primary">انتخاب فایل</button>
+        <button id="sample" type="button" class="ghost">حجم نمونه مصنوعی</button>
+      </div>
+      <p id="intake-note" class="note"></p>
+    </section>
+
+    <section class="viewer" aria-label="نمایش برش">
+      <div class="viewer-bar">
+        <div class="modes" id="modalities"></div>
+        <div class="modes" id="axes">
+          <button type="button" data-axis="axial" class="on">اکسیال</button>
+          <button type="button" data-axis="coronal">کرونال</button>
+          <button type="button" data-axis="sagittal">ساجیتال</button>
+        </div>
+      </div>
+      <figure>
+        <img id="slice" alt="برشی از حجم انتخاب‌شده هنوز بارگذاری نشده است">
+        <figcaption id="empty">حجمی برای نمایش نیست</figcaption>
+      </figure>
+      <label class="slider">
+        <span id="slice-label">برش</span>
+        <input id="index" type="range" min="0" max="0" value="0" disabled>
+      </label>
+    </section>
+
+    <section class="panel result" aria-live="polite">
+      <header>
+        <h2>خروجی مدل</h2>
+        <p>فقط با چک‌پوینت آموزش‌دیده پر می‌شود.</p>
+      </header>
+      <div id="verdict" class="verdict waiting">
+        <b>هنوز بررسی نشده</b>
+        <span>بعد از بارگذاری مطالعه، بررسی را بزن.</span>
+      </div>
+      <dl id="regions" class="regions" hidden></dl>
+      <button id="predict" type="button" class="primary" disabled>بررسی با مدل پژوهشی</button>
+      <p id="result-note" class="note"></p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

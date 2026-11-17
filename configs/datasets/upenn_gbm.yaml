@@ -1,0 +1,46 @@
+name: UPENN-GBM
+root: datasets/raw/UPENN-GBM
+patient_id_from: parent_directory
+confirmed_layout: false
+modalities:
+  t1:
+    required: true
+    patterns: ["*_T1.nii.gz", "*_11_T1.nii.gz"]
+  t1ce:
+    required: true
+    patterns: ["*_T1GD.nii.gz", "*_11_T1GD.nii.gz", "*_T1ce.nii.gz"]
+  t2:
+    required: true
+    patterns: ["*_T2.nii.gz", "*_11_T2.nii.gz"]
+  flair:
+    required: true
+    patterns: ["*_FLAIR.nii.gz", "*_11_FLAIR.nii.gz"]
+labels:
+  segmentation:
+    confirmed: false
+    convention: "UPENN-GBM provides expert and automated masks for a subset. Confirm which file and which integers before training."
+    patterns: ["*_segm.nii.gz", "*_11_segm.nii.gz", "*_automated_segm.nii.gz"]
+    values: {}
+    regions: {}
+  classification:
+    confirmed: false
+  molecular:
+    confirmed: false
+    table: null
+    columns: []
+    reason: "Molecular fields live in the clinical CSV. Configure the local table. Do not impute missing molecular labels."
+  survival:
+    confirmed: false
+    table: null
+    time_column: null
+    event_column: null
+    reason: "Survival fields live in the clinical CSV. Configure time and event columns. Censored or missing rows stay missing."
+tasks:
+  segmentation: false
+  classification: false
+  molecular: false
+  survival: false
+notes: >
+  Commonly reported NIfTI names are listed as patterns only.
+  Not every subject has every sequence or a segmentation.
+  Incomplete cases are reported and excluded only when the config says so.
