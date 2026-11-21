@@ -1,6 +1,6 @@
 seed: 42
 device: auto
-dataset: BraTS
+dataset: MSD-BrainTumour
 model_config: configs/models/hybrid.yaml
 data:
   processed_root: datasets/processed

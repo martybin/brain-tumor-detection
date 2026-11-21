@@ -84,7 +84,7 @@ def _crop_pair(
 ) -> tuple[np.ndarray, np.ndarray]:
     spatial = image.shape[1:]
     starts = []
-    foreground = np.argwhere(regions.reshape(regions.shape[0], -1).any(axis=0))
+    foreground = np.flatnonzero(regions.reshape(regions.shape[0], -1).any(axis=0))
     use_foreground = regions.any() and float(rng.random()) < pos_fraction and len(foreground)
     if use_foreground:
         flat = int(foreground[int(rng.integers(len(foreground)))])

@@ -13,6 +13,7 @@ SCHEMAS: dict[str, str] = {
     "UPENN-GBM": "configs/datasets/upenn_gbm.yaml",
     "REMBRANDT": "configs/datasets/rembrandt.yaml",
     "BraTS-PEDs": "configs/datasets/brats_peds.yaml",
+    "MSD-BrainTumour": "configs/datasets/msd_brain.yml",
 }
 
 

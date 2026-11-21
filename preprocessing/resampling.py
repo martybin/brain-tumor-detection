@@ -18,6 +18,8 @@ def resample_array(
     target = np.array(target_spacing, dtype=np.float64)
     if np.any(current <= 0) or np.any(target <= 0):
         raise ValueError(f"Spacing must be positive, got {current} -> {target}")
+    if np.allclose(current, target, rtol=1e-3, atol=1e-3):
+        return data, affine
     factor = current / target
     if data.dtype.kind in "iu" or order == 0:
         resampled = zoom(data, factor, order=0, prefilter=False)

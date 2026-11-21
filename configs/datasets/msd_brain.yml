@@ -1,0 +1,62 @@
+name: MSD-BrainTumour
+root: datasets/raw/MSD-BrainTumour
+patient_id_from: parent_directory
+confirmed_layout: true
+source:
+  name: Medical Segmentation Decathlon Task01_BrainTumour
+  url: http://medicaldecathlon.com/
+  download: https://msd-for-monai.s3-us-west-2.amazonaws.com/Task01_BrainTumour.tar
+  note: Public BraTS-derived training set. This is not the BraTS 2021 challenge package
+    from TCIA.
+modalities:
+  t1:
+    required: true
+    patterns:
+    - '*_t1.nii.gz'
+  t1ce:
+    required: true
+    patterns:
+    - '*_t1ce.nii.gz'
+  t2:
+    required: true
+    patterns:
+    - '*_t2.nii.gz'
+  flair:
+    required: true
+    patterns:
+    - '*_flair.nii.gz'
+labels:
+  segmentation:
+    confirmed: true
+    convention: 'Integers and names copied from Task01 dataset.json. Regions follow
+      those names: WT includes edema, non-enhancing tumor, and enhancing tumor.'
+    patterns:
+    - '*_seg.nii.gz'
+    values:
+      '0': background
+      '1': edema
+      '2': non-enhancing tumor
+      '3': enhancing tumour
+    regions:
+      WT:
+      - 1
+      - 2
+      - 3
+      TC:
+      - 2
+      - 3
+      ET:
+      - 3
+  classification:
+    confirmed: false
+  molecular:
+    confirmed: false
+  survival:
+    confirmed: false
+tasks:
+  segmentation: true
+  classification: false
+  molecular: false
+  survival: false
+notes: 484 training cases were split from the Decathlon 4-channel volumes. Validation
+  images in the archive have no labels and were not imported.
